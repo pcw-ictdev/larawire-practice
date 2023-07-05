@@ -42,6 +42,8 @@ class PostIndex extends Component
     {
         $posts = Post::where('title', 'LIKE', '%'.$this->search.'%')->paginate($this->pagination);
 
+        $this->resetPage(); // Add this to avoid search bug when in next index page
+
         return view('livewire.post-index', compact('posts'));
     }
 }
