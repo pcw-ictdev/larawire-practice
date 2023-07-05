@@ -10,6 +10,9 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="sweetalert2.min.js"></script>
+        <link rel="stylesheet" href="sweetalert2.min.css">
         <!-- Styles -->
         @livewireStyles
 
@@ -43,4 +46,19 @@
 
         @livewireScripts
     </body>
+
+    <script>
+        window.addEventListener('swal',function(e) {
+            Swal.fire({
+                title:  e.detail.title,
+                icon: e.detail.icon,
+                iconColor: e.detail.iconColor,
+                timer: 3000,
+                toast: true,
+                position: 'center',
+                toast:  false,
+                showConfirmButton:  false,
+            });
+        });
+    </script>
 </html>

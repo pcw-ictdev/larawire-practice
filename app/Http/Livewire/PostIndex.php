@@ -36,6 +36,12 @@ class PostIndex extends Component
         ]);
 
         $this->reset();
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'Item successfully saved!',
+            'icon'=>'success',
+            'iconColor'=>'blue',
+        ]);
     }
 
     public function render()
