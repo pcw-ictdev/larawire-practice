@@ -55,8 +55,8 @@
                 iconColor: e.detail.iconColor,
                 timer: 3000,
                 toast: true,
-                position: 'center',
-                toast:  false,
+                position: 'top-right',
+                toast:  true,
                 showConfirmButton:  false,
             });
         });
