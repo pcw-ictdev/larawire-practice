@@ -24,6 +24,8 @@
             </form>
         </div>
     </div> --}}
+    <input type="text" wire:model="name">
+    Hello {{ $name }}
     <div class="w-96 m-2 p-2">
         <div class="mb-3">
             <div class="relative mb-4 flex w-full flex-wrap items-stretch">
@@ -82,20 +84,27 @@
                                 {{ $post->body }}
                             </td>
                             <td class="px-6 py-4">
-                                CRUD
+                                <x-jet-button wire:click="showEditPostModal({{ $post->id }})">Edit</x-jet-button>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
             {{ $posts->links() }}
+            {{ $postsCount }}
             {{-- {{ $posts->appends(request()->toArray())->links() }} --}}
             {{-- {{ $posts->links('custom-pagination-links-view') }} --}}
         </div>
     </div>
     <div>
         <x-jet-dialog-modal wire:model="showingPostModal">
-            <x-slot name="title">Create Post</x-slot>
+            <x-slot name="title">
+                @if ($isEditMode)
+                    Edit
+                @else
+                    Create
+                @endif
+            </x-slot>
             <x-slot name="content">
                 <div class="w-full">
                     <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -106,7 +115,7 @@
                                     <span class="text-red-500">{{ $message }}</span>
                                 @enderror
                             </label>
-                            <input wire:model.lazy="title" name="title"
+                            <input wire:model="title" name="title"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline 
                                 @error('title')
                                     border-red-500
@@ -120,7 +129,7 @@
                                     <span class="text-red-500">{{ $message }}</span>
                                 @enderror
                             </label>
-                            <input wire:model.lazy="body" name="body"
+                            <input wire:model="body" name="body"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline
                                 @error('body')
                                     border-red-500
@@ -131,10 +140,17 @@
                 </div>
             </x-slot>
             <x-slot name="footer">
-                <x-jet-button wire:click="storePost"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    Submit
-                </x-jet-button>
+                @if ($isEditMode)
+                    <x-jet-button wire:click="updatePost({{ $post->id }})"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Update
+                    </x-jet-button>
+                @else
+                    <x-jet-button wire:click="storePost"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Create
+                    </x-jet-button>
+                @endif
             </x-slot>
         </x-jet-dialog-modal>
     </div>
